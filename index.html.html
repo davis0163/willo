@@ -1,0 +1,106 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Willow Haynes | Institutional Wealth Architecture</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .page { display: none; }
+        .page.active { display: block; }
+        body { background-color: #050a14; color: #e2e8f0; }
+        .ticker-move { display: inline-block; animation: ticker 50s linear infinite; }
+        @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+    </style>
+</head>
+<body class="font-sans antialiased">
+
+    <!-- Market Ticker -->
+    <div class="bg-blue-950 border-b border-blue-900 text-[10px] uppercase py-2 text-blue-300 tracking-widest overflow-hidden whitespace-nowrap">
+        <div id="ticker" class="ticker-move font-mono"></div>
+    </div>
+
+    <!-- Header -->
+    <nav class="bg-slate-900 border-b border-slate-800 sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-6 flex justify-between items-center">
+            <h1 class="text-3xl font-black text-white italic tracking-tighter">WILLOW<span class="text-blue-500">HAYNES</span></h1>
+            <div class="flex space-x-8 font-bold text-xs uppercase tracking-widest">
+                <button onclick="showPage('home')" class="hover:text-blue-400">Welcome</button>
+                <button onclick="showPage('dash')" class="hover:text-blue-400">Dashboard</button>
+                <button onclick="showPage('funds')" class="hover:text-blue-400">Strategies</button>
+                <button onclick="showPage('contact')" class="text-blue-400">Contact</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page: Welcome -->
+    <main id="home" class="page active container mx-auto px-6 py-20 text-center">
+        <h2 class="text-5xl font-bold mb-6">Architecting Your Financial Future</h2>
+        <p class="text-slate-400 text-lg max-w-2xl mx-auto mb-10">We provide institutional-grade investment solutions with the precision of structural design. Transparency, security, and long-term stability.</p>
+        <button onclick="showPage('dash')" class="bg-blue-600 px-8 py-3 rounded font-bold hover:bg-blue-500 transition">Enter Portal</button>
+    </main>
+
+    <!-- Page: Dashboard (Live Simulation) -->
+    <section id="dash" class="page container mx-auto px-6 py-12">
+        <h2 class="text-3xl font-bold mb-8">Real-Time Market Monitor</h2>
+        <table class="w-full text-left border-collapse border border-slate-800 bg-slate-900">
+            <thead><tr class="bg-slate-950 border-b border-slate-800 text-slate-500 uppercase text-[10px]"><th class="p-4">Ticker</th><th class="p-4">Asset Class</th><th class="p-4">Price (USD)</th><th class="p-4">Daily Change</th></tr></thead>
+            <tbody id="market-table" class="text-sm font-mono"></tbody>
+        </table>
+    </section>
+
+    <!-- Page: Strategies -->
+    <section id="funds" class="page container mx-auto px-6 py-12">
+        <h2 class="text-3xl font-bold mb-10">Investment Strategies</h2>
+        <div class="grid md:grid-cols-2 gap-6">
+            <div class="bg-slate-900 p-8 border border-slate-800">
+                <h3 class="text-xl font-bold">WH Global Income Fund</h3>
+                <p class="text-sm text-slate-400 mt-2">Yield optimization via derivatives.</p>
+            </div>
+            <div class="bg-slate-900 p-8 border border-slate-800">
+                <h3 class="text-xl font-bold">WH Digital Asset Alpha</h3>
+                <p class="text-sm text-slate-400 mt-2">Institutional-grade crypto exposure.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Page: Contact -->
+    <section id="contact" class="page container mx-auto px-6 py-12 text-center">
+        <div class="max-w-md mx-auto bg-slate-900 p-10 border border-slate-800 rounded">
+            <h2 class="text-2xl font-bold mb-8 italic">Contact Consultation</h2>
+            <a href="https://wa.me/16693604980" class="block text-green-400 font-bold mb-4 italic">WhatsApp Support</a>
+            <a href="mailto:willowhaynes95@gmail.com" class="block text-blue-400 font-bold italic">willowhaynes95@gmail.com</a>
+            <p class="text-[9px] text-slate-600 mt-10">57th St, New York, NY 10019</p>
+        </div>
+    </section>
+
+    <script>
+        function showPage(id) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
+
+        // Simulated Data
+        const assets = [
+            {t: "WH-INC", c: "Fixed Income", p: 102.45},
+            {t: "WH-SOL", c: "Crypto", p: 145.20},
+            {t: "WH-GLD", c: "Commodity", p: 2350.10}
+        ];
+        const tbody = document.getElementById('market-table');
+        function updateTable() {
+            tbody.innerHTML = assets.map(a => `
+                <tr class="border-b border-slate-800">
+                    <td class="p-4 font-bold text-blue-400">${a.t}</td>
+                    <td class="p-4">${a.c}</td>
+                    <td class="p-4">$${(a.p + (Math.random()-0.5)).toFixed(2)}</td>
+                    <td class="p-4 text-green-500">+${(Math.random()*2).toFixed(2)}%</td>
+                </tr>`).join('');
+        }
+        setInterval(updateTable, 3000);
+        updateTable();
+        document.getElementById('ticker').innerText = "BTC/USD +1.2% | GOLD -0.1% | SPX +0.8% | WH-INC STABLE | WH-SOL +2.1%";
+    </script>
+</body>
+</html>
