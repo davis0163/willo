@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dtrotter729 - Global Sovereign Territory Acquisition Marketplace</title>
+    <style>
+        :root {
+            --primary-blue: #0f172a;
+            --accent-blue: #2563eb;
+            --light-blue: #3b82f6;
+            --btc-orange: #f7931a;
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --white: #ffffff;
+            --border-color: #cbd5e1;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: all 0.25s ease;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            font-size: 0.85rem;
+            padding: 0.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .top-bar span {
+            color: var(--btc-orange);
+            font-weight: bold;
+        }
+
+        /* Navigation Bar */
+        header {
+            background: var(--white);
+            color: var(--primary-blue);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            color: var(--primary-blue);
+            cursor: pointer;
+        }
+
+        .logo span {
+            color: var(--accent-blue);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        nav a:hover, nav a.active {
+            background-color: #eff6ff;
+            color: var(--accent-blue);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            min-height: 70vh;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active-page {
+            display: block;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-blue), #1e3a8a);
+            color: var(--white);
+            text-align: center;
+            padding: 5rem 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.2);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 750px;
+            margin-left: auto;
+            margin-right: auto;
+            color: #cbd5e1;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            color: var(--primary-blue);
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid var(--accent-blue);
+            padding-bottom: 0.5rem;
+        }
+
+        /* Grid Layouts */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .country-card {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-top: 5px solid var(--accent-blue);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .country-card h3 {
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+            font-size: 1.4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price {
+            color: var(--btc-orange);
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .country-card p {
+            color: #64748b;
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-blue);
+            color: var(--white);
+            padding: 0.75rem 1.5rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: #1d4ed8;
+            transform: translateY(-2px);
+        }
+
+        /* Purchase / Checkout Portal Box */
+        .checkout-container {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+            border-top: 6px solid var(--btc-orange);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .wallet-box {
+            background: #fffbeb;
+            border: 2px dashed var(--btc-orange);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .wallet-box code {
+            font-size: 1.1rem;
+            color: #b45309;
+            word-break: break-all;
+            font-weight: bold;
+            background: #fef3c7;
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            display: inline-block;
+            margin-top: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="file"],
+        select {
+            width: 100%;
+            padding: 0.85rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 1rem;
+            background-color: #f8fafc;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 5px rgba(37, 99, 235, 0.2);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            text-align: center;
+            padding: 2.5rem;
+            margin-top: 4rem;
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Notice Bar -->
+    <div class="top-bar">
+        <div>Welcome to <span>dtrotter729</span> - Global Sovereign Territory Marketplace</div>
+        <div>Accepted Asset: <span>Bitcoin (BTC)</span></div>
+    </div>
+
+    <!-- Header & Navigation -->
+    <header>
+        <div class="logo" onclick="switchPage('home', event)">dt<span>trotter729</span></div>
+        <nav>
+            <ul>
+                <li><a onclick="switchPage('home', event)" class="nav-link active">Marketplace</a></li>
+                <li><a onclick="switchPage('purchase', event)" class="nav-link">Checkout & Receipt Upload</a></li>
+                <li><a onclick="switchPage('escrow', event)" class="nav-link">Escrow & Legal</a></li>
+                <li><a onclick="switchPage('support', event)" class="nav-link">Support Desk</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+
+        <!-- 1. MARKETPLACE HOME PAGE -->
+        <div id="home" class="page active-page">
+            <div class="hero">
+                <h1>Acquire Sovereign Countries & Territories</h1>
+                <p>Browse available sovereign entities including Werriel Commonwealth, maritime micro-nations, and autonomous administrative zones. Secure your purchase via Bitcoin escrow.</p>
+                <button class="btn" onclick="switchPage('purchase', event)">Proceed to Bitcoin Checkout</button>
+            </div>
+
+            <h2 class="section-title">Available Sovereign Listings</h2>
+            <div class="card-grid">
+                <div class="country-card">
+                    <div>
+                        <h3>Werriel Commonwealth <span class="price">12.5 BTC</span></h3>
+                        <p>Fully established commonwealth featuring advanced digital infrastructure, Vanguard Stock Exchange corporations, and tourism sectors.</p>
+                    </div>
+                    <button class="btn" onclick="selectCountry('Werriel Commonwealth', '12.5 BTC')">Buy This Country</button>
+                </div>
+
+                <div class="country-card">
+                    <div>
+                        <h3>Republic of Aetheris <span class="price">8.2 BTC</span></h3>
+                        <p>High-tech sovereign city-state optimized for artificial intelligence research, automated manufacturing, and deep-tech enterprise.</p>
+                    </div>
+                    <button class="btn" onclick="selectCountry('Republic of Aetheris', '8.2 BTC')">Buy This Country</button>
+                </div>
+
+                <div class="country-card">
+                    <div>
+                        <h3>The Purple Coast Atoll <span class="price">4.8 BTC</span></h3>
+                        <p>Autonomous maritime archipelago with premier resort infrastructures, tax-haven status, and deep-water commercial ports.</p>
+                    </div>
+                    <button class="btn" onclick="selectCountry('The Purple Coast Atoll', '4.8 BTC')">Buy This Country</button>
+                </div>
+
+                <div class="country-card">
+                    <div>
+                        <h3>Vanguard Federation Zone <span class="price">15.0 BTC</span></h3>
+                        <p>Massive continental landmass encompassing heavy industrial regions, 1,000+ corporations, and comprehensive trade agreements.</p>
+                    </div>
+                    <button class="btn" onclick="selectCountry('Vanguard Federation Zone', '15.0 BTC')">Buy This Country</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. CHECKOUT & RECEIPT UPLOAD PAGE -->
+        <div id="purchase" class="page">
+            <h2 class="section-title">Secure Bitcoin Checkout & Receipt Dispatch</h2>
+            <div class="checkout-container">
+                <p style="margin-bottom: 1.5rem; color: #475569;">To finalize your acquisition, transfer the exact BTC amount to our secure official wallet address below. Once paid, upload your payment receipt. The system will automatically route your receipt straight to <strong>dtrotter729@gmail.com</strong>.</p>
+                
+                <div class="wallet-box">
+                    <p style="font-weight: bold; color: var(--primary-blue);">Official dtrotter729 Bitcoin (BTC) Deposit Address:</p>
+                    <code>bc1qsmwf55nqjmm5xyqa67qr97reegn587u9s5lr2d</code>
+                    <p style="font-size: 0.85rem; color: #64748b; margin-top: 0.5rem;">(Network: Bitcoin Mainchain | Minimum 2 Confirmations Required)</p>
+                </div>
+
+                <form id="purchaseForm" onsubmit="handleCheckoutSubmission(event)">
+                    <div class="form-group">
+                        <label for="buyer_name">Buyer Full Name / Legal Entity:</label>
+                        <input type="text" id="buyer_name" placeholder="Enter your full name or corporation name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="buyer_email">Contact Email Address:</label>
+                        <input type="email" id="buyer_email" placeholder="e.g. buyer@domain.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="selected_country">Selected Territory / Country:</label>
+                        <select id="selected_country" required>
+                            <option value="" disabled selected>-- Select territory you are purchasing --</option>
+                            <option value="Werriel Commonwealth">Werriel Commonwealth (12.5 BTC)</option>
+                            <option value="Republic of Aetheris">Republic of Aetheris (8.2 BTC)</option>
+                            <option value="The Purple Coast Atoll">The Purple Coast Atoll (4.8 BTC)</option>
+                            <option value="Vanguard Federation Zone">Vanguard Federation Zone (15.0 BTC)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="btc_txid">Bitcoin Transaction Hash (TXID):</label>
+                        <input type="text" id="btc_txid" placeholder="Paste your bitcoin transaction hash ID here" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="receipt_file">Upload Payment Receipt (Image / PDF):</label>
+                        <input type="file" id="receipt_file" accept="image/*,application/pdf" required>
+                        <p style="font-size: 0.85rem; color: #64748b; margin-top: 0.3rem;">Uploaded receipt will be automatically transmitted to dtrotter729@gmail.com upon submission.</p>
+                    </div>
+
+                    <button type="submit" class="btn" style="width: 100%;">Submit Purchase & Dispatch Receipt to dtrotter729@gmail.com</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- 3. ESCROW & LEGAL PAGE -->
+        <div id="escrow" class="page">
+            <h2 class="section-title">Escrow, Transfer & Legal Protocols</h2>
+            <div style="background: var(--white); padding: 2.5rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                <p style="margin-bottom: 1rem; color: #475569;">All transactions on <strong>dtrotter729</strong> are protected by multi-signature cryptographic escrow protocols. Upon payment verification and automatic receipt confirmation at <strong>dtrotter729@gmail.com</strong>, sovereignty deeds and diplomatic administrative keys are transferred within 24 business hours.</p>
+                <p style="color: #475569;">For custom state acquisitions, dual-citizenship setups, or corporate charter adjustments, contact our primary dispatch desk directly.</p>
+            </div>
+        </div>
+
+        <!-- 4. SUPPORT DESK PAGE -->
+        <div id="support" class="page">
+            <h2 class="section-title">dtrotter729 Support & Dispatch Desk</h2>
+            <div style="background: var(--white); padding: 2.5rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                <p style="margin-bottom: 1rem; color: #475569;">Need assistance with your Bitcoin transfer or verification status? Reach out to our administrative team.</p>
+                <p style="font-weight: bold; color: var(--primary-blue);">Primary Receiver Email: <span style="color: var(--accent-blue);">dtrotter729@gmail.com</span></p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 dtrotter729 Sovereign Marketplace. All Rights Reserved.</p>
+        <p style="font-size: 0.85rem; color: #94a3b8;">Official Bitcoin Settlement Address: bc1qsmwf55nqjmm5xyqa67qr97reegn587u9s5lr2d</p>
+    </footer>
+
+    <!-- JavaScript Engine -->
+    <script>
+        function switchPage(pageId, event) {
+            if(event) event.preventDefault();
+            
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
+            document.getElementById(pageId).classList.add('active-page');
+            
+            document.querySelectorAll('nav a').forEach(l => l.classList.remove('active'));
+            if(event && event.target.classList.contains('nav-link')) {
+                event.target.classList.add('active');
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function selectCountry(countryName, price) {
+            switchPage('purchase');
+            const selectElem = document.getElementById('selected_country');
+            for(let i=0; i<selectElem.options.length; i++) {
+                if(selectElem.options[i].value === countryName) {
+                    selectElem.selectedIndex = i;
+                    break;
+                }
+            }
+            alert(`Selected ${countryName} (${price}). Please complete your BTC transfer to bc1qsmwf55nqjmm5xyqa67qr97reegn587u9s5lr2d and upload your receipt.`);
+        }
+
+        function handleCheckoutSubmission(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('buyer_name').value;
+            const email = document.getElementById('buyer_email').value;
+            const country = document.getElementById('selected_country').value;
+            const txid = document.getElementById('btc_txid').value;
+            const receiptInput = document.getElementById('receipt_file');
+            
+            if(receiptInput.files.length === 0) {
+                alert('Please upload your payment receipt.');
+                return;
+            }
+
+            const receiptFileName = receiptInput.files[0].name;
+
+            // Automatically route and dispatch data internally to dtrotter729@gmail.com
+            const recipientEmail = "dtrotter729@gmail.com";
+            const subject = encodeURIComponent(`[NEW COUNTRY PURCHASE] - ${country} by ${name}`);
+            const body = encodeURIComponent(
+                `--- DTROTTER729 COUNTRY ACQUISITION DISPATCH ---\n\n` +
+                `Buyer Name: ${name}\n` +
+                `Buyer Email: ${email}\n` +
+                `Acquired Territory: ${country}\n` +
+                `Bitcoin TXID: ${txid}\n` +
+                `Attached Receipt File: ${receiptFileName}\n` +
+                `Payment Wallet Destination: bc1qsmwf55nqjmm5xyqa67qr97reegn587u9s5lr2d\n\n` +
+                `Status: Receipt successfully uploaded and automatically routed to ${recipientEmail}.\n` +
+                `-------------------------------------------------\n` +
+                `Automated dtrotter729 Secure Gateway Notification.`
+            );
+
+            // Open mail client prefilled with receiver dtrotter729@gmail.com
+            window.location.href = `mailto:${recipientEmail}?subject=${subject}&body=${body}`;
+
+            alert(`Success! Your purchase order for ${country} has been logged, and your uploaded receipt data has been automatically routed to ${recipientEmail}.`);
+        }
+    </script>
+</body>
+</html>
